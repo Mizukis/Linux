@@ -1,0 +1,64 @@
+Задание_1.
+
+cat > script1.sh
+
+#!/bin/bash
+
+echo -n "Данный скрипт поможет удалить пустые строки и заменить маленькие буква на большие.
+Пожалуйста укажите путь к файлу: "
+
+read item
+
+tr -s '\n' < $item | tr [a-z] [A-Z]
+
+
+chmod +x script1.sh
+. script1.sh
+
+
+
+
+
+Задание_2.
+
+#!/bin/bash
+
+tail -f /var/log/auth.log | grep "Failed"
+
+
+
+
+Задание_3.
+Не получилось
+
+
+
+
+
+Задание_4.
+
+Только в домашней директории получилось, если файлы везде, то слишком длинно и я запуталась.
+
+$ for i in `grep -P "x\:[0-9]{4,}" /etc/passwd`; do echo $i | awk -F":" '{printf $1 " - "}'; du -sh `echo $i | awk -F: '{printf $6}'`; done
+
+
+
+
+
+
+
+
+Задание_5.
+
+#!/bin/bash
+
+for i in `find $1 -maxdepth 1 -type f -print`
+do
+ if `echo ${i} | grep -vqP "${0}$"`
+ then
+  OWNER=`ls -l $i | awk '{print $3}'`
+  mkdir $OWNER
+  cp -p $i $OWNER && rm -f $i
+ fi
+done
+
